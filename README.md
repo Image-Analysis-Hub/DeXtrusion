@@ -18,10 +18,10 @@ This repository contains the code source of the python DeXtrusion library, the t
 DeXtrusion takes as input a movie of an epithelium and outputs the **spatio-temporal location of cell extrusion events** or other event as cell divisions. 
 The movie is discretized into small overlapping rolling windows which are individually [classified for event detection](#event-classification) by a trained [neural network](#deXNets-deXtrusion-neural-networks). Results are then put together in event [probability map](#event-probability-map) for the whole movie or as [spatio-temporal points](#event-spot-localization) indicating each event. 
 
-<p align="center">
-![Example extrusion detection](images/SequenceExtrusion.png)
+<p align="center"> 
+    <img src="https://github.com/Image-Analysis-Hub/DeXtrusion/blob/main/images/SequenceExtrusion.png" height="100"/>
 Example of the detection of an extrusion event (probability map, red).
-</p>
+ </p>
 
 
 ### Event classification
