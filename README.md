@@ -19,7 +19,7 @@ DeXtrusion takes as input a movie of an epithelium and outputs the **spatio-temp
 The movie is discretized into small overlapping rolling windows which are individually [classified for event detection](#event-classification) by a trained [neural network](#deXNets-deXtrusion-neural-networks). Results are then put together in event [probability map](#event-probability-map) for the whole movie or as [spatio-temporal points](#event-spot-localization) indicating each event. 
 
 <p align="center">
-![Example extrusion detection](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/images/SequenceExtrusion.png "Extrusion detection example") 
+![Example extrusion detection](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/images/SequenceExtrusion.png)
 Example of the detection of an extrusion event (probability map, red).
 </p>
 
