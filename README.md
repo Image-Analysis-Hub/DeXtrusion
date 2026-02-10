@@ -1,4 +1,4 @@
-# ![DeXtrusion](https://github.com/Image-Analysis-Hub/DeXtrusion/tree/main/images/DeX.png "DeXtrusion") DeXtrusion
+# ![DeXtrusion](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/images/DeX.png) DeXtrusion
 
 DeXtrusion is  a machine learning based python pipeline to detect cell extrusions in epithelial tissues movies. It can also detect cell divisions and SOPs, and can easily be trained to detect other dynamic events. 
 
@@ -19,7 +19,7 @@ DeXtrusion takes as input a movie of an epithelium and outputs the **spatio-temp
 The movie is discretized into small overlapping rolling windows which are individually [classified for event detection](#event-classification) by a trained [neural network](#deXNets-deXtrusion-neural-networks). Results are then put together in event [probability map](#event-probability-map) for the whole movie or as [spatio-temporal points](#event-spot-localization) indicating each event. 
 
 <p align="center">
-![Example extrusion detection](https://github.com/Image-Analysis-Hub/DeXtrusion/tree/main/images/SequenceExtrusion.png "Extrusion detection example") 
+![Example extrusion detection](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/images/SequenceExtrusion.png "Extrusion detection example") 
 Example of the detection of an extrusion event (probability map, red).
 </p>
 
@@ -36,10 +36,10 @@ It is easy to add or remove a cellular event to this list, but necessitates to t
 
 ### Event probability map
 Each window is associated an event probability which allow to generate an events probability map on the whole movie. This probability maps can be refined to precise spatio-temporal spots for each event.
-The results can be visualized by overlaying the initial movie and all the probability maps saved by DeXtrusion in Fiji with the saved by DeXtrusion with the [`deXtrusion_overlayProbabilityMaps.ijm`](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/ijmacros/deXtrusion_overlayProbabilityMaps.ijm) macro.
+The results can be visualized by overlaying the initial movie and all the probability maps saved by DeXtrusion in Fiji with the saved by DeXtrusion with the [`deXtrusion_overlayProbabilityMaps.ijm`](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/ijmacros/deXtrusion_overlayProbabilityMaps.ijm) macro.
 
 <p align="center">
-![Example probability maps](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/images/SequenceProbamaps.png?raw=True "Probability map example") 
+![Example probability maps](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/images/SequenceProbamaps.png?raw=True "Probability map example") 
 </p>
 
 Example of probability maps (green: division, red: extrusion, blue: SOP
@@ -47,7 +47,7 @@ Example of probability maps (green: division, red: extrusion, blue: SOP
 ### Event spot localization
 An event is visible in the probability map as a volume of connected pixels of high probability. To convert the probability map to a list of event, we place the event localization at the center of each of these high probability volumes.
 Moreover, to reduce false positive detections, the volumes can be thresholded to keep only big enough volume of high enough probability values. 
-The list of spots obtained in this way are saved in ROIS `.zip` file that can be open in Fiji through the `ROIManager` tool. The macro [`deXtrusion_showROIs.ijm`](#https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/ijmacros/deXtrusion_showROIs.ijm) allows to directly visualize with Fiji the results saved by DeXtrusion. 
+The list of spots obtained in this way are saved in ROIS `.zip` file that can be open in Fiji through the `ROIManager` tool. The macro [`deXtrusion_showROIs.ijm`](#https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/ijmacros/deXtrusion_showROIs.ijm) allows to directly visualize with Fiji the results saved by DeXtrusion. 
 
 
 ## Installation
@@ -113,7 +113,7 @@ From DeXtrusion user interface, to select a network to run, you have to go insid
 DeXtrusion can be used directly within python. 
 To run an already trained network and detect cell events, run `python3 -m dextrusion` in your virtual environment. It will open a graphical interface to perform the detection.
 
-We also propose [Jupyter notebooks](https://github.com/Image-Analysis-Hub/DeXtrusion/-/tree/main/jupyter_notebooks) in this repository, to use dextrusion options. 
+We also propose [Jupyter notebooks](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/jupyter_notebooks) in this repository, to use dextrusion options. 
 You can find a notebook to perform the detection, train a new neural network, retrain a network or evaluate the performance of the network compared to a manual detection.
 
 ### Trouble shooting
@@ -210,44 +210,44 @@ In the `deXNets` folder of this repository, we proposed several trained networks
 Download them and unzip to be ready to use in DeXtrusion.
 
 ### Train/retrain a new DeXNet
-If you want to train/retrain a neural network, to add a new event to detect or to improve its performance on new datasets, Jupyter notebooks are proposed in this repository: [Jupyter notebooks](https://github.com/Image-Analysis-Hub/DeXtrusion/-/tree/main/jupyter_notebooks). You can just follow step by step the notebook.
+If you want to train/retrain a neural network, to add a new event to detect or to improve its performance on new datasets, Jupyter notebooks are proposed in this repository: [Jupyter notebooks](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/jupyter_notebooks). You can just follow step by step the notebook.
 
 If you want to change the architecture of DeXNet, you will have to change it in the `src/dextrusion/Network.py` file. The architecture is defined in the `action_model` function.
 
 
 ## Fiji macros
 
-Fiji macros to prepare data for DeXtrusion neural network training or to handle DeXtrusion results are available in the [`Fiji macros`](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/ijmacros/) folder of this repository.
+Fiji macros to prepare data for DeXtrusion neural network training or to handle DeXtrusion results are available in the [`Fiji macros`](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/ijmacros/) folder of this repository.
 
-* [deXtrusion_checkAndClearROIs.ijm](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/ijmacros/deXtrusion_checkAndClearROIs.ijm) allows to check manually all the detected ROIs and to keep only the correct ones. 
+* [deXtrusion_checkAndClearROIs.ijm](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/ijmacros/deXtrusion_checkAndClearROIs.ijm) allows to check manually all the detected ROIs and to keep only the correct ones. 
 It shows each event (point ROI) detected by deXtrusion as a pop-up window centered temporally and spatially around the event.
 The user is asked wether the detection is correct (if there is an event in the current window) by pressing `y` or `n`.
 If yes, the ROI is kept, else it will be removed from the list of ROIs.
 
 
-* [deXtrusion_scoreROIs_Random.ijm](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/ijmacros/deXtrusion_scoreROIs_Random.ijm) allows to score manually the precision of the detected events.
+* [deXtrusion_scoreROIs_Random.ijm](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/ijmacros/deXtrusion_scoreROIs_Random.ijm) allows to score manually the precision of the detected events.
 The macro will open randomly a given number of ROIs, and show a window centered temporally and spatially around the event.
 The user is asked wether the detection is correct (if it contains the event) by pressing `y` or `n`.
 The macro will output the count of correct and false detections and the precision. 
 The ROIs file will not be edited and the ROIs left after running this macro should not be saved as it deletes all the ROIs explored to be sure not to draw them twice.
 
-* [deXtrusion_overlayProbabilityMaps.ijm](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/ijmacros/deXtrusion_overlayProbabilityMaps.ijm) allows to visualize the probability maps together with the original image.
+* [deXtrusion_overlayProbabilityMaps.ijm](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/ijmacros/deXtrusion_overlayProbabilityMaps.ijm) allows to visualize the probability maps together with the original image.
 The user is asked for the original image to visualize and will open the probability maps in the `results` folder where they should be saved by default.
 The directory to look in can be changed in the macro. 
 
-* [deXtrusion_showROIs.ijm](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/ijmacros/deXtrusion_showROIs.ijm) displays the original movie (chosen by the user) and the ROI file found in the `results` folder. 
+* [deXtrusion_showROIs.ijm](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/ijmacros/deXtrusion_showROIs.ijm) displays the original movie (chosen by the user) and the ROI file found in the `results` folder. 
 The location of the ROI file can be changed in the macro by changing the `resfold` parameter and the event to show (by default extrusion) can be changed in the `type` parameter.
 
-* [deXtrusion_subsetMovieAndRois.ijm](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/ijmacros/deXtrusion_subsetMovieAndRois.ijm) save a temporal subset of a movie, and keep only the corresponding ROIs. 
+* [deXtrusion_subsetMovieAndRois.ijm](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/ijmacros/deXtrusion_subsetMovieAndRois.ijm) save a temporal subset of a movie, and keep only the corresponding ROIs. 
 
 
 ## Jupyter notebooks
 We provide in this repository several jupyter notebooks to run, train/retrain, evaluate DeXtrusion. 
-* [detectEventsOnMovie.ipynb](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/jupyter_notebooks/detectEventsOnMovie.ipynb) allows you to run DeXtrusion with the graphical interaface to choose the parameters. 
-* [deXtrusion_TrainNetwork.ipynb](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/jupyter_notebooks/deXtrusion_TrainNetwork.ipynb) to train a new DeXNet network with your own data (or using our data publicly available, see [data section](#Data)).
-* [deXtrusion_RetrainNetwork.ipynb](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/jupyter_notebooks/deXtrusion_RetrainNetwork.ipynb) to retrain an already trained neural network with new data.
-* [deXtrusion_CompareRois.ipynb](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/jupyter_notebooks/deXtrusion_CompareRois.ipynb) to compare two ROIs files (manual detection vs DeXtrusion detection) and gives the score. It can also generate ROIs files of the false detection (false positives and/or false negatives).
-* [deXtrusion_testClassification_OnWindows.ipynb](https://github.com/Image-Analysis-Hub/DeXtrusion/-/blob/main/jupyter_notebooks/deXtrusion_testClassification_OnWindows.ipynb): run the trained neural network (DeXNet) on test data on generated windows, and print the resulting confusion matrix of the classification (DeXtrusion classification compared to the manual classification).
+* [detectEventsOnMovie.ipynb](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/jupyter_notebooks/detectEventsOnMovie.ipynb) allows you to run DeXtrusion with the graphical interaface to choose the parameters. 
+* [deXtrusion_TrainNetwork.ipynb](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/jupyter_notebooks/deXtrusion_TrainNetwork.ipynb) to train a new DeXNet network with your own data (or using our data publicly available, see [data section](#Data)).
+* [deXtrusion_RetrainNetwork.ipynb](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/jupyter_notebooks/deXtrusion_RetrainNetwork.ipynb) to retrain an already trained neural network with new data.
+* [deXtrusion_CompareRois.ipynb](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/jupyter_notebooks/deXtrusion_CompareRois.ipynb) to compare two ROIs files (manual detection vs DeXtrusion detection) and gives the score. It can also generate ROIs files of the false detection (false positives and/or false negatives).
+* [deXtrusion_testClassification_OnWindows.ipynb](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/jupyter_notebooks/deXtrusion_testClassification_OnWindows.ipynb): run the trained neural network (DeXNet) on test data on generated windows, and print the resulting confusion matrix of the classification (DeXtrusion classification compared to the manual classification).
 
 #### Notebooks usage
 * If you have Jupyter installed on your computer, to add your virtual environment to the environment Jupyter can see:
