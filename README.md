@@ -39,7 +39,8 @@ Each window is associated an event probability which allow to generate an events
 The results can be visualized by overlaying the initial movie and all the probability maps saved by DeXtrusion in Fiji with the saved by DeXtrusion with the [`deXtrusion_overlayProbabilityMaps.ijm`](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/ijmacros/deXtrusion_overlayProbabilityMaps.ijm) macro.
 
 <p align="center">
-       <img src="https://github.com/Image-Analysis-Hub/DeXtrusion/blob/main/images/SequenceProbamaps.png" height="150"/>
+   <img src="https://github.com/Image-Analysis-Hub/DeXtrusion/blob/main/images/SequenceProbamaps.png" height="200"/>
+   
    Probability maps example
 </p>
 
