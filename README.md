@@ -1,4 +1,12 @@
-# ![DeXtrusion](https://github.com/Image-Analysis-Hub/DeXtrusion/raw/main/images/DeX.png) DeXtrusion
+# DeXtrusion
+
+<img src=https://github.com/Image-Analysis-Hub/DeXtrusion/blob/main/images/logo_cnrs.png align="right"/>
+<img src=https://github.com/Image-Analysis-Hub/DeXtrusion/blob/main/images/logo_dscb.png align="right"/>
+
+<img src=https://github.com/Image-Analysis-Hub/Dextrusion/blob/main/images/DeX.png caption="DeXtrusion logo" align="left"/> 
+</br></br>
+<p align="center"><b>Automatic detection of cellular events in epithelia.</b></p>
+</br></br>
 
 DeXtrusion is  a machine learning based python pipeline to detect cell extrusions in epithelial tissues movies. It can also detect cell divisions and SOPs, and can easily be trained to detect other dynamic events. 
 
