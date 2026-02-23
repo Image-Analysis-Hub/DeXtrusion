@@ -1,8 +1,5 @@
 # DeXtrusion <img src=https://github.com/Image-Analysis-Hub/Dextrusion/blob/main/images/DeX.png caption="DeXtrusion logo"/> 
 
-<img src=https://github.com/Image-Analysis-Hub/DeXtrusion/blob/main/images/logo_cnrs.png align="right"/>
-<img src=https://github.com/Image-Analysis-Hub/DeXtrusion/blob/main/images/logo_dscb.png align="right"/>
-
 <img src=https://github.com/Image-Analysis-Hub/Dextrusion/blob/main/images/dextrusion_maps.png caption="DeXtrusion maps" width=150 align="left"/> 
 </br></br></br>
 <p align="center"><b>Automatic detection of cellular events in epithelia.</b></p>
