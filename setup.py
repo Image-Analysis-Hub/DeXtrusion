@@ -23,7 +23,7 @@ setup(
         "scikit-image",
         "scikit-learn",
         "scipy",
-        "tensorflow<=2.10", 
+        "tensorflow<=2.11", 
         "protobuf==3.19",
         "ipython"
     ],
