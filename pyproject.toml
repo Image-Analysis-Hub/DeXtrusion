@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dextrusion"
-version = "0.0.10"
+version = "0.0.11"
 description = "DeXtrusion: automatic detection of cell extrusion in epithelial tissu"
 license.file = "LICENSE"
 readme = "README.md"
