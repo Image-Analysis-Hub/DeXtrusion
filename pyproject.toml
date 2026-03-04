@@ -1,3 +1,55 @@
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "dextrusion"
+version = "0.0.9"
+description = "DeXtrusion: automatic detection of cell extrusion in epithelial tissu"
+license.file = "LICENSE"
+readme = "README.md"
+requires-python = ">3.8"
+authors = [
+	{name = "Gaëlle Letort"},
+	{name = "Alexis Villars"},
+]
+
+classifiers = [
+    "Framework :: napari",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+	"Programming Language :: Python :: 3.9",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+
+dependencies = [
+	"matplotlib",
+	"numpy<2",
+	"opencv-python",
+	"tifffile>=2022.2.2",
+	"roifile",
+	"scikit-image",
+	"scikit-learn",
+	"scipy",
+	"tensorflow<=2.11",
+	"protobuf==3.19",
+	"ipython"
+]
+
+[project.urls]
+"Bug Tracker" = "https://github.com/Image-Analysis-Hub/dextrusion/issues"
+"Documentation" = "https://image-analysis-hub.github.io/dextrusion/"
+"Source Code" = "https://github.com/Image-Analysis-Hub/dextrusion"
+"User Support" = "https://github.com/Image-Analysis-Hub/dextrusion/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+# Explicitly list packages to include
+packages = [
+    "dextrusion",
+]
+
