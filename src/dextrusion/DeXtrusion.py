@@ -210,7 +210,7 @@ class DeXtrusion:
             return None
         return self.catnames.index( catname )
 
-    def set_output_names( self, movie_path ):
+    def set_output_names( self, movie_path, outfolder="None" ):
         """ Set the path of output directory and files, creates it if needed """
         imdir = os.path.dirname(movie_path)
         output_name = os.path.basename(movie_path)
@@ -390,7 +390,7 @@ class DeXtrusion:
         if self.verbose:
             start_time = time.time()
         img = imread(moviepath)
-        self.set_output_names( moviepath )
+        self.set_output_names( moviepath, outfolder )
         self.detect_events(img, models, cell_diameter, extrusion_duration, dxy, dz, group_size=group_size)
 
         if self.verbose:
