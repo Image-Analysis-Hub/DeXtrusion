@@ -194,6 +194,34 @@ class DeXtrusion:
         for ind in range(1,len(events)-2):
             self.catnames.append(events[ind].strip().replace("'",""))
 
+    ################################################################
+    ####### Set/Get, utilities functions
+    def get_categories( self ):
+        """ Return the categories (events) names """
+        return self.catnames
+
+    def get_categories_nb( self ):
+        """ Return the number of event types """
+        return len( self.catnames )
+
+    def get_category_index( self, catname ):
+        """" Returns the index of event type catname if it exists """
+        if catname not in self.catnames:
+            return None
+        return self.catnames.index( catname )
+
+    def set_output_names( self, movie_path ):
+        """ Set the path of output directory and files, creates it if needed """
+        imdir = os.path.dirname(movie_path)
+        output_name = os.path.basename(movie_path)
+        output_name = os.path.splitext(output_name)[0]
+        if outfolder is None:
+            self.outpath = os.path.join(imdir, "results")
+        else:
+            self.outpath = outfolder
+        if not os.path.exists(self.outpath):
+            os.makedirs(self.outpath)
+        self.outname = os.path.join(self.outpath, output_name)
 
     ################################################################################################ 
     ###### Neural network (model) calls
@@ -362,16 +390,7 @@ class DeXtrusion:
         if self.verbose:
             start_time = time.time()
         img = imread(moviepath)
-        imdir = os.path.dirname(moviepath)
-        output_name = os.path.basename(moviepath)
-        output_name = os.path.splitext(output_name)[0]
-        if outfolder is None:
-            self.outpath = os.path.join(imdir, "results")
-        else:
-            self.outpath = outfolder
-        if not os.path.exists(self.outpath):
-            os.makedirs(self.outpath)
-        self.outname = os.path.join(self.outpath, output_name)
+        self.set_output_names( moviepath )
         self.detect_events(img, models, cell_diameter, extrusion_duration, dxy, dz, group_size=group_size)
 
         if self.verbose:
