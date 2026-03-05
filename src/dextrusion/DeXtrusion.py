@@ -212,9 +212,8 @@ class DeXtrusion:
     def get_event_index( self, eventname ):
         """" Returns the index of event type catname if it exists """
         catname = "_"+eventname+".zip"
-        return get_category_index( catname )
+        return self.get_category_index( catname )
             
-
     def get_category_index( self, catname ):
         """" Returns the index of category type catname if it exists """
         if catname not in self.catnames:
@@ -236,7 +235,7 @@ class DeXtrusion:
 
     def get_probability_map( self, event_name ):
         """ Returns the probability map of event """
-        index = get_event_index( event_name )
+        index = self.get_event_index( event_name )
         return self.probamap[index-1] ## because index 0 corresponds to nothing 
 
 
