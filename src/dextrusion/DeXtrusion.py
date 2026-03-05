@@ -197,15 +197,26 @@ class DeXtrusion:
     ################################################################
     ####### Set/Get, utilities functions
     def get_categories( self ):
-        """ Return the categories (events) names """
+        """ Return the categories names """
         return self.catnames
+
+    def get_events_names( self ):
+        """ Return the list of events names (from category names )"""
+        event_list = [item.strip('_').replace('.zip', '') for item in self.catnames if item]
+        return event_list
 
     def get_categories_nb( self ):
         """ Return the number of event types """
         return len( self.catnames )
+    
+    def get_event_index( self, eventname ):
+        """" Returns the index of event type catname if it exists """
+        catname = "_"+eventname+".zip"
+        return get_category_index( catname )
+            
 
     def get_category_index( self, catname ):
-        """" Returns the index of event type catname if it exists """
+        """" Returns the index of category type catname if it exists """
         if catname not in self.catnames:
             return None
         return self.catnames.index( catname )
