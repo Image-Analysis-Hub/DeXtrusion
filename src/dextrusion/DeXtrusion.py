@@ -234,6 +234,12 @@ class DeXtrusion:
             os.makedirs(self.outpath)
         self.outname = os.path.join(self.outpath, output_name)
 
+    def get_probability_map( self, event_name ):
+        """ Returns the probability map of event """
+        index = get_event_index( event_name )
+        return self.probamap[index-1] ## because index 0 corresponds to nothing 
+
+
     ################################################################################################ 
     ###### Neural network (model) calls
     
@@ -523,6 +529,7 @@ class DeXtrusion:
                 ### get the movie file directory, name and size
                 img = self.get_rawproba_frompath(imgpath, cat=icat)
             self.rescale_and_write( img, cat=icat, endname="_proba.tif", imgtype="Probability map", astime=astime)
+
 
 
     def write_cleanedprobamap(self, cat=1, volume_threshold=800, proba_threshold=180, disxy=10, distime=4, imgpath=None, endname="_proba.tif", astime=True):
