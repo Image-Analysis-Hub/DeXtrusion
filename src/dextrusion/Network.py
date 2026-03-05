@@ -1,4 +1,5 @@
 import os, random, math
+from tabnanny import verbose
 import numpy as np
 import matplotlib.pyplot as plt
 from tensorflow.keras.layers import Conv2D, BatchNormalization, MaxPool2D, GlobalMaxPool2D, Input
@@ -10,8 +11,9 @@ from tensorflow.keras.optimizers import SGD
 from sklearn import metrics
 from IPython.display import clear_output
 import tensorflow as tf
-from tensorflow.keras.backend import clear_session
-from tensorflow.keras.backend import function
+
+# Import compatibility functions
+from .keras_compat import get_keras_function, clear_session, init_tf_session, get_metric_name, KERAS_3
 
 """
 BSD 3-Clause License
@@ -65,14 +67,8 @@ class Network:
         save_model(self.model, model_path)
         
     def init_tf(self, verbose=True):
-        if verbose:
-            print("Tensorflow with Cuda: "+str(tf.test.is_built_with_cuda()))
-            print("Tensorflow version: "+str(tf.__version__))
-            print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
-        config = tf.compat.v1.ConfigProto( device_count = {'GPU': 0} )
-        sess = tf.compat.v1.Session(config=config)
-        tf.compat.v1.keras.backend.set_session(sess)
-        
+        init_tf_session(verbose)
+
     def reset(self, model_path):
         clear_session()
         self.model = load_model(model_path)
@@ -90,7 +86,8 @@ class Network:
     
     def get_last_layer(self, x):
         layer = self.model.get_layer("dense").output
-        get_layer_output = function(self.model.layer[0].input, layer)
+        keras_function = get_keras_function()
+        get_layer_output = keras_function([self.model.layers[0].input], [layer])
         return get_layer_output([x])
     
     def conv_block(self,input_tensor, nfil, momentum):
@@ -98,8 +95,8 @@ class Network:
         x = Conv2D(nfil, (3,3), padding='same', activation='relu')(x)
         x = BatchNormalization(momentum=momentum)(x)
         return x
-        
-    def build_convnet(self,input_tensor, nfilters):
+            
+    def build_convnet(self, input_tensor, nfilters):
         momentum = .95
         c1 = self.conv_block(input_tensor, nfilters, momentum)
         c1 = MaxPool2D()(c1)
@@ -112,20 +109,48 @@ class Network:
         return Model(inputs=[input_tensor], outputs=[c4])
 
     def action_model(self, shape, ncat, nfilters):
-        input_tensor = Input(shape[1:]+(1,), name='input')
-        convnet = self.build_convnet(input_tensor, nfilters)
-        
         inputl = Input(shape+(1,), name='input')
-        tconv = TimeDistributed(convnet)(inputl) 
-        de = GRU(64)(tconv)   # 64 GRU or LSTM
-        #tconv = LSTM(24)(tconv)   # GRU or LSTM
+        
+        if KERAS_3:
+            # Keras 3: Build convnet inline for TimeDistributed
+            # TimeDistributed doesn't work well with sub-models in Keras 3
+            momentum = .95
+            
+            # Block 1
+            tconv = TimeDistributed(Conv2D(nfilters, (3,3), padding='same', activation='relu'))(inputl)
+            tconv = TimeDistributed(Conv2D(nfilters, (3,3), padding='same', activation='relu'))(tconv)
+            tconv = TimeDistributed(BatchNormalization(momentum=momentum))(tconv)
+            tconv = TimeDistributed(MaxPool2D())(tconv)
+            
+            # Block 2
+            tconv = TimeDistributed(Conv2D(nfilters*2, (3,3), padding='same', activation='relu'))(tconv)
+            tconv = TimeDistributed(Conv2D(nfilters*2, (3,3), padding='same', activation='relu'))(tconv)
+            tconv = TimeDistributed(BatchNormalization(momentum=momentum))(tconv)
+            tconv = TimeDistributed(MaxPool2D())(tconv)
+            
+            # Block 3
+            tconv = TimeDistributed(Conv2D(nfilters*4, (3,3), padding='same', activation='relu'))(tconv)
+            tconv = TimeDistributed(Conv2D(nfilters*4, (3,3), padding='same', activation='relu'))(tconv)
+            tconv = TimeDistributed(BatchNormalization(momentum=momentum))(tconv)
+            tconv = TimeDistributed(MaxPool2D())(tconv)
+            
+            # Block 4
+            tconv = TimeDistributed(Conv2D(nfilters*8, (3,3), padding='same', activation='relu'))(tconv)
+            tconv = TimeDistributed(Conv2D(nfilters*8, (3,3), padding='same', activation='relu'))(tconv)
+            tconv = TimeDistributed(BatchNormalization(momentum=momentum))(tconv)
+            tconv = TimeDistributed(GlobalMaxPool2D())(tconv)
+        else:
+            # Keras 2: Use the sub-model approach
+            input_tensor = Input(shape[1:]+(1,), name='input')
+            convnet = self.build_convnet(input_tensor, nfilters)
+            tconv = TimeDistributed(convnet)(inputl)
+        
+        de = GRU(64)(tconv)
         
         # Decision network
         de = Dropout(.5)(de)
         de = Dense(32, activation='relu')(de)
         de = Dense(16, activation='relu')(de)
-        #de = Dropout(.5)(de)
-        #de = Dense(8, activation="relu")(tconv)
         output = Dense(ncat, activation='softmax')(de)
         return Model(inputs=[inputl], outputs=[output])
     
@@ -205,15 +230,21 @@ class TrainingPlot(Callback):
         self.val_losses = []
         self.val_acc = []
         self.logs = []
+        # Determine correct metric names for current Keras version
+        self.acc_key = get_metric_name('accuracy')
+        self.val_acc_key = get_metric_name('val_accuracy')
     
     def on_epoch_end(self, epoch, logs={}):
         ''' Called at the end of each epoch plot the loss and accuracy '''
         # Append the logs, losses and accuracies to the lists
         self.logs.append(logs)
         self.losses.append(logs.get('loss'))
-        self.acc.append(logs.get('acc'))
+        # Use correct metric names for current Keras version
+        acc_key = 'accuracy' if KERAS_3 else 'acc'
+        val_acc_key = 'val_accuracy' if KERAS_3 else 'val_acc'
+        self.acc.append(logs.get(acc_key))
         self.val_losses.append(logs.get('val_loss'))
-        self.val_acc.append(logs.get('val_acc'))
+        self.val_acc.append(logs.get(val_acc_key))
         
         # Before plotting ensure at least 2 epochs have passed
         if len(self.losses) > 1:

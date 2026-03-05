@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dextrusion"
-version = "0.0.13b"
+version = "0.0.14"
 description = "DeXtrusion: automatic detection of cell extrusion in epithelial tissu"
 license.file = "LICENSE"
 readme = "README.md"
@@ -33,12 +33,11 @@ dependencies = [
 	"scikit-image",
 	"scikit-learn",
 	"scipy",
-    "tensorflow<=2.11; sys_platform == 'linux' or sys_platform == 'win32'",
-    "tensorflow<=2.11; sys_platform == 'darwin' and platform_machine == 'x86_64'",
-    "tensorflow>=2.13; sys_platform == 'darwin' and platform_machine == 'arm64'",
-	"protobuf<=3.19; sys_platform=='linux' or sys_platform=='win32'",
-	"protobuf; sys_platform=='darwin' or platform_machine=='x86_64'",
-    "protobuf; sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "tensorflow>=2.10,<=2.16; sys_platform == 'linux' or sys_platform == 'win32'",
+    "tensorflow>=2.10,<=2.16; sys_platform == 'darwin' and platform_machine == 'x86_64'",
+    "tensorflow-macos>=2.13,<=2.16; sys_platform == 'darwin' and platform_machine == 'arm64'",
+	"protobuf>=3.19,<5.0; sys_platform=='linux' or sys_platform=='win32'",
+	"protobuf>=3.19,<5.0; sys_platform=='darwin'",
 	"ipython"
 ]
 
