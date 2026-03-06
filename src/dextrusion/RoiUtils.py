@@ -32,33 +32,43 @@ def write_rois(outfile, rois, verbose=True):
         print("Writing "+str(len(rois))+" Rois in file "+outfile)
     roifile.roiwrite(outfile, rois, mode='w')
 
-def create_roi(pt, cat=1, astime=True):
+
+def create_roi(pt, cat=1, astime=True, astype="roi", catname=None):
     """ Create an ImageJ Roi from point coordinates """
-    croi = roifile.ImagejRoi()
-    croi.version = 227
-    croi.roitype = roifile.ROI_TYPE(10)
-    #croi.name = str(val)
-    croi.name = str(pt[0]+1).zfill(4)+'-'+str(pt[1]).zfill(4)+"-"+str(pt[2]).zfill(4)
-    croi.n_coordinates = 1
-    croi.left = int(pt[2])
-    croi.top = int(pt[1])
-    croi.position = pt[0] + 1
-    if astime:
-        croi.z_position = 1
-        croi.t_position = pt[0]+1
-    else:
-        croi.z_position = pt[0]+1
-        croi.t_position = 1
-    croi.c_position = 1
-    croi.integer_coordinates = array([[0,0]])
-    croi.stroke_width=3
-    if cat == 1:  ## color cell extrusion
-        croi.stroke_color = b'\xff\xff\x00\x00'
-    if cat == 2:  ## color cell sop
-        croi.stroke_color = b'\xff\x00\x00\xff'
-    if cat == 3:  ## color cell division
-        croi.stroke_color = b'\xff\x00\xff\x00'
-    return croi
+    if astype == "roi":
+        croi = roifile.ImagejRoi()
+        croi.version = 227
+        croi.roitype = roifile.ROI_TYPE(10)
+        #croi.name = str(val)
+        croi.name = str(pt[0]+1).zfill(4)+'-'+str(pt[1]).zfill(4)+"-"+str(pt[2]).zfill(4)
+        croi.n_coordinates = 1
+        croi.left = int(pt[2])
+        croi.top = int(pt[1])
+        croi.position = pt[0] + 1
+        if astime:
+            croi.z_position = 1
+            croi.t_position = pt[0]+1
+        else:
+            croi.z_position = pt[0]+1
+            croi.t_position = 1
+        croi.c_position = 1
+        croi.integer_coordinates = array([[0,0]])
+        croi.stroke_width=3
+        if cat == 1:  ## color cell extrusion
+            croi.stroke_color = b'\xff\xff\x00\x00'
+        if cat == 2:  ## color cell sop
+            croi.stroke_color = b'\xff\x00\x00\xff'
+        if cat == 3:  ## color cell division
+            croi.stroke_color = b'\xff\x00\xff\x00'
+        return croi
+    if astype == "dict":
+        croi = {}
+        croi["name"] = catname
+        croi["position_yx"] = [pt[1], pt[2]]
+        croi["position_frame"] = pt[0]+1
+        return croi
+    print("Not implemented")
+    return
 
 def distance_rois(roi1, roi2):
     return sqrt( pow(roi1[2]-roi2[2],2) + pow(roi1[1]-roi2[1],2) )

@@ -604,7 +604,7 @@ class DeXtrusion:
             outfile = self.outname+self.catnames[icat]
             ru.write_rois(outfile, rois, verbose=self.verbose)
 
-    def get_event_rois( self, icat, volume_threshold, proba_threshold, thres, disxy, dist ):
+    def get_event_rois( self, icat, volume_threshold, proba_threshold, thres, disxy, dist, astype="rois", catname=None ):
         """ Get the ROIs from probamap for one event type at index icat"""
         binimg, labels, llabels, vols, vals = self.rawproba_to_volumes(self.probamap[icat-1], thres, mindxy=disxy, mindt=dist)
         coords = measurements.center_of_mass(binimg, labels=labels, index=llabels)
@@ -614,7 +614,7 @@ class DeXtrusion:
         for (pt, vol, val) in zip(coords, vols, vals):
             if not isnan(pt[0]) and (vol>volume_threshold) and (val>proba_threshold):
                 roiz, roiy, roix = self.rescale_position( pt[0], pt[1], pt[2] )
-                rois.append(ru.create_roi((roiz, roiy, roix), cat=icat))
+                rois.append(ru.create_roi((roiz, roiy, roix), cat=icat, astype=astype, catname=catname))
         return rois
 
     def rawproba_to_volumes(self, img, threshold, mindxy=5, mindt=3, to_image=False):
