@@ -220,7 +220,7 @@ class DeXtrusion:
             return None
         return self.catnames.index( catname )
 
-    def set_output_names( self, movie_path, outfolder="None" ):
+    def set_output_names( self, movie_path, outfolder=None ):
         """ Set the path of output directory and files, creates it if needed """
         imdir = os.path.dirname(movie_path)
         output_name = os.path.basename(movie_path)
@@ -600,18 +600,22 @@ class DeXtrusion:
             cats = [cat]
         
         for icat in cats:
-            binimg, labels, llabels, vols, vals = self.rawproba_to_volumes(self.probamap[icat-1], 125, mindxy=disxy, mindt=dist)
-            coords = measurements.center_of_mass(binimg, labels=labels, index=llabels)
-            del binimg
-            gc.collect()
-            rois = []
-            for (pt, vol, val) in zip(coords, vols, vals):
-                if not isnan(pt[0]) and (vol>volume_threshold) and (val>proba_threshold):
-                    roiz, roiy, roix = self.rescale_position( pt[0], pt[1], pt[2] )
-                    rois.append(ru.create_roi((roiz, roiy, roix), cat=icat))
-            
+            rois = self.get_event_rois( icat, volume_threshold, proba_threshold, 125, disxy, dist )
             outfile = self.outname+self.catnames[icat]
             ru.write_rois(outfile, rois, verbose=self.verbose)
+
+    def get_event_rois( self, icat, volume_threshold, proba_threshold, thres, disxy, dist ):
+        """ Get the ROIs from probamap for one event type at index icat"""
+        binimg, labels, llabels, vols, vals = self.rawproba_to_volumes(self.probamap[icat-1], thres, mindxy=disxy, mindt=dist)
+        coords = measurements.center_of_mass(binimg, labels=labels, index=llabels)
+        del binimg
+        gc.collect()
+        rois = []
+        for (pt, vol, val) in zip(coords, vols, vals):
+            if not isnan(pt[0]) and (vol>volume_threshold) and (val>proba_threshold):
+                roiz, roiy, roix = self.rescale_position( pt[0], pt[1], pt[2] )
+                rois.append(ru.create_roi((roiz, roiy, roix), cat=icat))
+        return rois
 
     def rawproba_to_volumes(self, img, threshold, mindxy=5, mindt=3, to_image=False):
         """ Transform raw probamap to separated event volumes (local maxima and watershed) """
