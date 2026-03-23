@@ -585,7 +585,7 @@ class DeXtrusion:
         return cleanproba
 
 
-    def get_rois(self, cat=None, volume_threshold=1000, proba_threshold=180, disxy=10, dist=4):
+    def get_rois(self, cat=None, volume_threshold=1000, proba_threshold=180, disxy=10, dist=4, catname="None" ):
         """ From probamap, get ROIs from centroids of positive (proba>=proba_threshold) volumes 
         :param cat: number of the event (in the list of events) to process. If None, will process all the events.
         :param volume_threshold: threshold of the positive detection volume to keep it and transform it to ROI
@@ -596,11 +596,13 @@ class DeXtrusion:
         
         if cat is None:
             cats = range(1,self.ncat)
+            catnames = self.catnames
         else:
             cats = [cat]
+            catnames = [catname]
         
-        for icat in cats:
-            rois = self.get_event_rois( icat, volume_threshold, proba_threshold, 125, disxy, dist )
+        for ind, icat in enumerate(cats):
+            rois = self.get_event_rois( icat, volume_threshold, proba_threshold, 125, disxy, dist, astype="rois", catname=catnames[ind] )
             outfile = self.outname+self.catnames[icat]
             ru.write_rois(outfile, rois, verbose=self.verbose)
 
