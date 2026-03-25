@@ -585,7 +585,7 @@ class DeXtrusion:
         return cleanproba
 
 
-    def get_rois(self, cat=None, volume_threshold=1000, proba_threshold=180, disxy=10, dist=4, catname="None" ):
+    def get_rois(self, cat=None, volume_threshold=1000, proba_threshold=180, disxy=10, dist=4, catname=None ):
         """ From probamap, get ROIs from centroids of positive (proba>=proba_threshold) volumes 
         :param cat: number of the event (in the list of events) to process. If None, will process all the events.
         :param volume_threshold: threshold of the positive detection volume to keep it and transform it to ROI
