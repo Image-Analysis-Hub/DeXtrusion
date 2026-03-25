@@ -47,7 +47,10 @@ def create_roi(pt, cat=1, astime=True, astype="roi", catname=None):
         croi.version = 227
         croi.roitype = roifile.ROI_TYPE(10)
         #croi.name = str(val)
-        croi.name = str(pt[0]+1).zfill(4)+'-'+str(pt[1]).zfill(4)+"-"+str(pt[2]).zfill(4)
+        if catname is not None:
+            croi.name = catname
+        else:
+            croi.name = str(pt[0]+1).zfill(4)+'-'+str(pt[1]).zfill(4)+"-"+str(pt[2]).zfill(4)
         croi.n_coordinates = 1
         croi.left = int(pt[2])
         croi.top = int(pt[1])
