@@ -28,9 +28,16 @@ modification, are permitted provided that the following conditions are met:
 """
 
 def write_rois(outfile, rois, verbose=True):
+    """ Save ROis in a zip file (Fiji format) """
     if verbose:
         print("Writing "+str(len(rois))+" Rois in file "+outfile)
-    roifile.roiwrite(outfile, rois, mode='w')
+    if len(rois) > 0:
+        roifile.roiwrite(outfile, rois, mode='w')
+    else:
+        # Handle the case where there are no ROIs
+        import zipfile
+        with zipfile.ZipFile(outfile, 'w') as zf:
+            pass  # Create an empty ZIP file
 
 
 def create_roi(pt, cat=1, astime=True, astype="roi", catname=None):

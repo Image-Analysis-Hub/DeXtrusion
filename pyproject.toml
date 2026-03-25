@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dextrusion"
-version = "0.0.18"
+version = "0.0.19"
 description = "DeXtrusion: automatic detection of cell extrusion in epithelial tissu"
 license.file = "LICENSE"
 readme = "README.md"
@@ -38,7 +38,7 @@ dependencies = [
     "tensorflow-macos>=2.13,<=2.16; sys_platform == 'darwin' and platform_machine == 'arm64'",
 	"protobuf>=3.19,<5.0; sys_platform=='linux' or sys_platform=='win32'",
 	"protobuf>=3.19,<5.0; sys_platform=='darwin'",
-	"ipython"
+	"ipython", 
 ]
 
 [project.urls]

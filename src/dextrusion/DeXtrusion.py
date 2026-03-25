@@ -602,11 +602,11 @@ class DeXtrusion:
             catnames = [catname]
         
         for ind, icat in enumerate(cats):
-            rois = self.get_event_rois( icat, volume_threshold, proba_threshold, 125, disxy, dist, astype="rois", catname=catnames[ind] )
+            rois = self.get_event_rois( icat, volume_threshold, proba_threshold, 125, disxy, dist, astype="roi", catname=catnames[ind] )
             outfile = self.outname+self.catnames[icat]
             ru.write_rois(outfile, rois, verbose=self.verbose)
 
-    def get_event_rois( self, icat, volume_threshold, proba_threshold, thres, disxy, dist, astype="rois", catname=None ):
+    def get_event_rois( self, icat, volume_threshold, proba_threshold, thres, disxy, dist, astype="roi", catname=None ):
         """ Get the ROIs from probamap for one event type at index icat"""
         binimg, labels, llabels, vols, vals = self.rawproba_to_volumes(self.probamap[icat-1], thres, mindxy=disxy, mindt=dist)
         coords = measurements.center_of_mass(binimg, labels=labels, index=llabels)
