@@ -11,6 +11,8 @@ This repository contains the code source of the python DeXtrusion library, the t
 
 * [Presentation](#presentation)
 * [Installation](#installation)
+    * [In Fiji](#in-fiji)
+    * [In Python](#in-python)
 * [Usage](#usage)
     * [Troubleshooting](#trouble-shooting)
 * [Data](#data)
@@ -59,8 +61,10 @@ The list of spots obtained in this way are saved in ROIS `.zip` file that can be
 
 ## Installation
 
+### In Fiji
 **NEW: DeXtrusion can now be installed and used from Fiji !**. See here: [https://github.com/Image-Analysis-Hub/dextrusion-appose](https://github.com/Image-Analysis-Hub/dextrusion-appose)
 
+### In python
 DeXtrusion is distributed as a python module, compatible with `python3`. 
 You can install it in a virtual environment to be sure to have the required versions.
 **DeXtrusion** can be installed either manually through the setup file or with pip:
