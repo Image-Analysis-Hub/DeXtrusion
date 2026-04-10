@@ -58,6 +58,9 @@ The list of spots obtained in this way are saved in ROIS `.zip` file that can be
 
 
 ## Installation
+
+**NEW: DeXtrusion can now be installed and used from Fiji !**. See here: [https://github.com/Image-Analysis-Hub/dextrusion-appose](https://github.com/Image-Analysis-Hub/dextrusion-appose)
+
 DeXtrusion is distributed as a python module, compatible with `python3`. 
 You can install it in a virtual environment to be sure to have the required versions.
 **DeXtrusion** can be installed either manually through the setup file or with pip:
